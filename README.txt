@@ -2,9 +2,9 @@ README
 =======
 npm i -g @nestjs/cli
 
-nest new project-name
+nest new eventflow-app
 
-cd project-name
+cd eventflow-app
 nest new auth-service
 ----
 dir structure 
