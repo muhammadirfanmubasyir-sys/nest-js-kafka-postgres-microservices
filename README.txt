@@ -38,4 +38,15 @@ eventflow-app
 npm i --save @nestjs/microservices kafkajs
 npm i --save kafkajs
 nest g lib kafka
+----------------------------------------------------
+REQUEST:
+POST: localhost:3001/register
+{
+	"email": "bismillah@gmail.com"
+}
 
+RESPONSE: 201
+{
+    "message": "User registered : bismillah@gmail.com"
+}
+-----------------------------------------------------
