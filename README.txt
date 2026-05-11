@@ -33,3 +33,9 @@ eventflow-app
     auth-service
   libs
     common   
+
+========================
+npm i --save @nestjs/microservices kafkajs
+npm i --save kafkajs
+nest g lib kafka
+

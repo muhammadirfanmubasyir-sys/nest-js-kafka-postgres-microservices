@@ -1,0 +1,28 @@
+import { Module } from '@nestjs/common';
+import { AuthServiceController } from './auth-service.controller';
+import { AuthServiceService } from './auth-service.service';
+import { KAFKA_BROKER, KAFKA_CLIENT_ID, KAFKA_CONSUMER_GROUP, KAFKA_SERVICE, KafkaModule } from '@app/kafka';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
+@Module({
+  imports: [
+    ClientsModule.register([
+      {
+        name: KAFKA_SERVICE,
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            brokers: [KAFKA_BROKER || 'localhost:9092'],
+            clientId: KAFKA_CLIENT_ID || 'eventflow-app',
+          },
+          consumer: {
+            groupId: KAFKA_CONSUMER_GROUP || 'eventflow-app-consumer',
+          },
+        },
+      }
+    ]),
+  ],
+  controllers: [AuthServiceController],
+  providers: [AuthServiceService],
+})
+export class AuthServiceModule {}

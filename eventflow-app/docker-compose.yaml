@@ -1,0 +1,70 @@
+services:
+  
+  kafka:
+    image: apache/kafka:latest
+    hostname: kafka
+    container_name: kafka
+    pull_policy: missing
+    ports:
+      - 9092:9092
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_PROCESS_ROLES: broker,controller # broker and controller in one node
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+      KAFKA_LISTENERS: PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    volumes:
+      - /kafka-data:/var/lib/kafka/data
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    pull_policy: missing
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      DYNAMIC_CONFIG_ENABLED: 'true'
+  postgres-eventflow:
+    container_name: postgres-eventflow
+    image: postgres
+    pull_policy: missing
+    environment:
+      POSTGRES_DB: eventflow
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      PG_DATA: /data/postgres
+    volumes:
+      - ./postgres-eventflow:/data/postgres
+    ports:
+      - "5433:5433"
+    command: -p 5433
+    restart: always
+  redis:
+    image: redis:7.4.2
+    container_name: redis
+    pull_policy: missing
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    pull_policy: missing
+    ports:
+      - "1025:1025" #SMTP
+      - "8025:8025" #Web UI
