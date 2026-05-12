@@ -49,6 +49,13 @@ RESPONSE: 201
 {
     "message": "User registered : bismillah@gmail.com"
 }
+
+SAMPLE .env
+===========
+DATABASE_URL='postgresql://admin:password@localhost:5433/eventflow-db?schema=public'
+
+JWT_SECRET=Bismillah99
+
 ------------- ORM POSTGRES ------------
 npm i --save drizzle-orm
 npm i --save pg
@@ -81,6 +88,11 @@ AFTER KAFKA-UI UP (http://localhost:8080):
 MANUALLY CREATE TABLE POSTGRES!!
 ================================
 npx drizzle-kit push
+
+CREATE ENV CONFIG
+=================
+npm install @nestjs/config
+
 ----------------------------
 REQUEST: Register User
 
