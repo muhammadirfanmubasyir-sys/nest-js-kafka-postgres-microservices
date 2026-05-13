@@ -142,4 +142,56 @@ RESPONSE: 200 (OK)
     "name": "Aisyah",
     "role": "USER"
 }
+---------------------------------------------------------------
+GET: localhost:3001/profile/36bd8131-a274-465f-9243-984c28adfd96
+RESPONSE : 401 (Unathorized)
+{
+    "message": "Unauthorized",
+    "statusCode": 401
+}
 --------------------------------------------------------------------
+GET: localhost:3001/profile/9088e9c7-58df-4434-8aac-14d05ed89795
+Header: Authorization
+Value: 'BEARER INVALID-TOKEN'
+
+RESPONSE : 401 (Unathorized)
+{
+    "message": "Unauthorized",
+    "statusCode": 401
+}
+========================================================
+VALIDATOR
+npm i --save class-validator class-transformer
+==============================================
+POST: localhost:3001/register
+{
+	"email": "mubasyir.gmail.com",
+    "name": "mubasyir",
+    "password": "abc"
+}
+--
+RESPONSE: 400 (BAD REQUEST)
+{
+    "message": [
+        "Please provide a valid email",
+        "Password must be 6 characters long"
+    ],
+    "error": "Bad Request",
+    "statusCode": 400
+}
+--------------------------------------------------
+POST: localhost:3001/login
+{
+	"email": "mubasyir.gmail.com",
+    "password": "abc"
+}
+--
+RESPONSE: 400 BAD REQUEST
+{
+    "message": [
+        "Please provide a valid email",
+        "Password must be 6 characters long"
+    ],
+    "error": "Bad Request",
+    "statusCode": 400
+}
