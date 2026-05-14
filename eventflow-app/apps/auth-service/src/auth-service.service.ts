@@ -1,4 +1,4 @@
-import { SERVICE_PORTS } from '@app/common/constants/services.constants';
+import { SERVICES_PORTS } from '@app/common/constants/services.constants';
 import { DatabaseService, users } from '@app/database';
 import { KAFKA_SERVICE, KAFKA_TOPICS } from '@app/kafka';
 import { Injectable, Logger, Inject, OnModuleInit, ConflictException, UnauthorizedException } from '@nestjs/common';
@@ -125,6 +125,7 @@ export class AuthServiceService implements OnModuleInit {
                         .limit(1);
     if (!user) {
       throw new UnauthorizedException('User not found');
+      this.LOGGER.log(`User with ID ${userId} not found`);
     }
 
     return user;

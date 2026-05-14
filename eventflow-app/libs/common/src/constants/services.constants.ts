@@ -8,7 +8,7 @@ export const SERVICES = {
   NOTIFICATION_SERVICE: 'notification-service',
 } as const;
 
-export const SERVICE_PORTS = {
+export const SERVICES_PORTS = {
     API_GATEWAY: 3000,
     AUTH_SERVICE: 3001,
     USERS_SERVICE: 3002,

@@ -60,7 +60,7 @@ JWT_SECRET=Bismillah99
 npm i --save drizzle-orm
 npm i --save pg
 npm i --save-dev @types/pg
-npm i --save -D drizzle-kit
+npm i --save -D drizzle-kit   => D = DEV
 ----------------------------------------
 D:\PROJECTS\nest-js-kafka-postgres-microservices\eventflow-app>npx drizzle-kit push
 
@@ -195,3 +195,19 @@ RESPONSE: 400 BAD REQUEST
     "error": "Bad Request",
     "statusCode": 400
 }
+
+=============== API GATEWAY =====================
+npm i @nestjs/axios axios
+
+eventflow-app>nest g module auth --project api-gateway  OR: nest g mo auth --project api-gateway
+CREATE apps/api-gateway/src/auth/auth.module.ts (85 bytes)
+UPDATE apps/api-gateway/src/app.module.ts (318 bytes)
+-----------
+eventflow-app>nest g controller auth --project api-gateway --no-spec OR nest g co auth --project api-gateway --no-spec
+CREATE apps/api-gateway/src/auth/auth.controller.ts (101 bytes)
+UPDATE apps/api-gateway/src/auth/auth.module.ts (170 bytes)
+----------
+eventflow-app>nest g service auth --project api-gateway --no-spec OR nest g s auth --project api-gateway --no-spec
+CREATE apps/api-gateway/src/auth/auth.service.ts (92 bytes)
+UPDATE apps/api-gateway/src/auth/auth.module.ts (244 bytes)
+----------

@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Injectable, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthServiceService } from './auth-service.service';
 import { LoginDto, RegisterDto } from '@app/common';
 import { AuthGuard } from '@nestjs/passport';
+
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {}
 
 @Controller()
 export class AuthServiceController {
@@ -12,7 +15,7 @@ export class AuthServiceController {
     return this.authServiceService.getHello();
   }
 
-  @Post('register_')
+  @Post('_register_')
   async registerUser(@Body() body: { email: string }) {
     return this.authServiceService.simulateUserRegistration(body.email);
   }
@@ -27,9 +30,21 @@ export class AuthServiceController {
     return this.authServiceService.login(dto.email, dto.password)
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile/:userId')
-  async getProfile(@Param('userId') userId: string) {
-    return this.authServiceService.getProfile(userId);
+ 
+  /**
+  * Assuming the JWT payload contains a 'userId' field, we can extract it from the request object.
+  * The JwtStrategy will validate the token and attach the payload to the request object, 
+  * allowing us to access the userId directly.
+  * This approach is more secure and efficient than passing the userId as a URL parameter, 
+  * as it relies on the integrity of the JWT token and ensures 
+  * that only authenticated users can access their profile information.
+  * 
+  * See jwt.strategy.ts for how the JWT payload is structured and validated.
+  */
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req: { user: { userId: string } })  // Assuming the JWT payload contains a 'userId' field
+  {
+    return this.authServiceService.getProfile(req.user.userId);
   }
 }

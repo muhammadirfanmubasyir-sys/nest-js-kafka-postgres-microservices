@@ -4,7 +4,9 @@ import { pgTable, uuid, varchar, timestamp, pgEnum } from 'drizzle-orm/pg-core';
 export const roleEnum = pgEnum('role', ['ADMIN', 'USER']);
 
 //User table schema
-export const users = pgTable('users', {
+const tableName = "users";
+
+export const users = pgTable(tableName, {
   id: uuid('id').primaryKey().defaultRandom(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   password: varchar('password', { length: 255 }).notNull(),

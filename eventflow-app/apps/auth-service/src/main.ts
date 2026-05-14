@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AuthServiceModule } from './auth-service.module';
-import { SERVICE_PORTS } from '@app/common';
+ 
 import { ValidationPipe } from '@nestjs/common';
-
+import { SERVICES_PORTS } from '@app/common';
+ 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
@@ -16,8 +17,8 @@ async function bootstrap() {
   );
 
 
-  await app.listen(SERVICE_PORTS.AUTH_SERVICE);
+  await app.listen(SERVICES_PORTS.AUTH_SERVICE);
 
-  console.log(`Auth Service is running on port ${SERVICE_PORTS.AUTH_SERVICE}`)
+  console.log(`Auth Service is running on port ${SERVICES_PORTS.AUTH_SERVICE}`)
 }
 bootstrap();
