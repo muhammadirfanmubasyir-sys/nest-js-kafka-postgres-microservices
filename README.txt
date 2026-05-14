@@ -211,3 +211,50 @@ eventflow-app>nest g service auth --project api-gateway --no-spec OR nest g s au
 CREATE apps/api-gateway/src/auth/auth.service.ts (92 bytes)
 UPDATE apps/api-gateway/src/auth/auth.module.ts (244 bytes)
 ----------
+POST: localhost:3000/auth/register
+{
+	"email": "ares@gmail.com",
+    "name": "Ares",
+    "password": "111111"
+}
+RESPONSE: 200
+{
+    "message": "User registered successfully..",
+    "userId": "5707bfc2-acbf-4639-a7fa-957056f61ab9"
+}
+-----------
+POST: localhost:3000/auth/login
+{
+	"email": "ares@gmail.com",
+    "password": "111111"
+}
+RESPONSE: 200
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NzA3YmZjMi1hY2JmLTQ2MzktYTdmYS05NTcwNTZmNjFhYjkiLCJlbWFpbCI6ImFyZXNAZ21haWwuY29tIiwiaWF0IjoxNzc4NzY4MzM5LCJleHAiOjE3Nzg4NTQ3Mzl9.CS8DRYdSNcRHVHCJL1JmH4C67h7wbboGXQ2QswpplS0",
+    "user": {
+        "id": "5707bfc2-acbf-4639-a7fa-957056f61ab9",
+        "email": "ares@gmail.com",
+        "name": "Ares",
+        "role": "USER"
+    }
+}
+----
+GET localhost:3000/auth/profile
+HEADER:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1NzA3YmZjMi1hY2JmLTQ2MzktYTdmYS05NTcwNTZmNjFhYjkiLCJlbWFpbCI6ImFyZXNAZ21haWwuY29tIiwiaWF0IjoxNzc4NzY4MzM5LCJleHAiOjE3Nzg4NTQ3Mzl9.CS8DRYdSNcRHVHCJL1JmH4C67h7wbboGXQ2QswpplS0
+RESPONSE: 200
+{
+    "id": "5707bfc2-acbf-4639-a7fa-957056f61ab9",
+    "email": "ares@gmail.com",
+    "name": "Ares",
+    "role": "USER"
+}
+---
+GET localhost:3000/auth/profile
+HEADER:
+Authorization: Invalid-TOKEN
+RESPONSE: 401
+{
+    "statusCode": 401,
+    "message": "Unauthorized"
+}
