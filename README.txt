@@ -11,7 +11,7 @@ dir structure
 =============
 eventflow-app
   apps
-    api-gateway
+    main => rename to: api-gateway
     auth-service
 
 SETTING
@@ -19,6 +19,8 @@ SETTING
 package.json
 nest-cli.json
 tsconfig.app.json (in each apps/)
+
+nest start --watch auth-service
 
 nest start --watch api-gateway
 
