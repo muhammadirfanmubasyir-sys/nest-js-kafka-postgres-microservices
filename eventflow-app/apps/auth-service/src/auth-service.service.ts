@@ -11,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthServiceService implements OnModuleInit {
+
   private readonly LOGGER = new Logger(AuthServiceService.name);
   
   constructor(
@@ -20,10 +21,8 @@ export class AuthServiceService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    // Subscribe to the 'auth-service-topic' topic
-    this.kafkaClient.subscribeToResponseOf(KAFKA_TOPICS.USER_REGISTERED);
-
-    //connect to the Kafka broker
+ 
+    // Connect to the Kafka broker
     await this.kafkaClient.connect();
   }
  
@@ -68,7 +67,7 @@ export class AuthServiceService implements OnModuleInit {
         timestamp: new Date().toISOString(),
     });
 
-    this.LOGGER.log(`Published event to Kafka-Topic : ${KAFKA_TOPICS.USER_REGISTERED} with email: ${email}`);
+    this.LOGGER.log(`EventPattern :: Published event to Kafka-Topic : ${KAFKA_TOPICS.USER_REGISTERED} with email: ${email}`);
 
     return {
       message: 'User registered successfully..', 
@@ -95,10 +94,11 @@ export class AuthServiceService implements OnModuleInit {
     // send user login event
     this.kafkaClient.emit(KAFKA_TOPICS.USER_LOGIN, { 
         userId: user.id,
+        userEmail: user.email,
         timestamp: new Date().toISOString(),
     });
 
-    this.LOGGER.log(`Succesfully, send notif to Kafka-Topic: ${KAFKA_TOPICS.USER_LOGIN}`)
+    this.LOGGER.log(`EventPattern :: Succesfully, send msg to Kafka-Topic: ${KAFKA_TOPICS.USER_LOGIN}`)
 
     return {
       access_token: token,
@@ -130,6 +130,33 @@ export class AuthServiceService implements OnModuleInit {
 
     return user;
 
+  }
+
+  handleUserRegisteredEvent(message: any) {
+    const payload = message?.value ?? message;
+    const event = typeof payload === 'string' ? JSON.parse(payload) : payload;
+
+   this.LOGGER.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_REGISTERED}: ${JSON.stringify(event)}`);
+
+
+    const { userId, email, timestamp } = event || {};
+
+    this.LOGGER.log(
+      `EventPattern :: Parsed USER_REGISTERED event: userId=${userId}, email=${email}, timestamp=${timestamp}`,
+    );
+  }
+
+  handleUserLoginMessage(message: any) {
+    const payload = message?.value ?? message;
+    const event = typeof payload === 'string' ? JSON.parse(payload) : payload;
+
+    this.LOGGER.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_LOGIN}: ${JSON.stringify(event)}`);
+
+    const { userId, timestamp } = event || {};
+
+    this.LOGGER.log(
+      `EventPattern :: Parsed USER_LOGIN event: userId=${userId}, timestamp=${timestamp}`,
+    );
   }
 
   getHello(): string {

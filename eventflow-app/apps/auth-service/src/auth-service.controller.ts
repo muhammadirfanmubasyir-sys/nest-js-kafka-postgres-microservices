@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Injectable, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { AuthServiceService } from './auth-service.service';
 import { LoginDto, RegisterDto } from '@app/common';
+import { KAFKA_TOPICS } from '@app/kafka';
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
@@ -16,20 +18,31 @@ export class AuthServiceController {
   }
 
   @Post('_register_')
-  async registerUser(@Body() body: { email: string }) {
+  registerUser(@Body() body: { email: string }) {
     return this.authServiceService.simulateUserRegistration(body.email);
   }
 
   @Post('register')
-  async register(@Body() dto: RegisterDto) {
+  register(@Body() dto: RegisterDto) {
     return this.authServiceService.register(dto.email, dto.password, dto.name)
   }
 
   @Post('login')
-  async login(@Body() dto: LoginDto) {
+  login(@Body() dto: LoginDto) {
     return this.authServiceService.login(dto.email, dto.password)
   }
 
+  @EventPattern(KAFKA_TOPICS.USER_REGISTERED)
+  handleUserRegistered(@Payload() message: any) {
+    console.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_REGISTERED}: ${JSON.stringify(message)}`);
+    this.authServiceService.handleUserRegisteredEvent(message);
+  }
+
+  @EventPattern(KAFKA_TOPICS.USER_LOGIN)
+  handleUserLogin(@Payload() message: any) {
+    console.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_LOGIN}: ${JSON.stringify(message)}`);
+    this.authServiceService.handleUserLoginMessage(message);
+  }
  
   /**
   * Assuming the JWT payload contains a 'userId' field, we can extract it from the request object.
