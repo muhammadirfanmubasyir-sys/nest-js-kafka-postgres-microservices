@@ -1,31 +1,47 @@
 README
 =======
-npm i -g @nestjs/cli
+1. npm i -g @nestjs/cli
 
-nest new eventflow-app
+2. nest new eventflow-app
 
-cd eventflow-app
-nest new auth-service
-----
+3. cd eventflow-app
+nest g app auth-service
+ 
+--------------
 dir structure 
 =============
 eventflow-app
-  apps
-    main => rename to: api-gateway
+  apps    
     auth-service
+    eventflow-app => 4. rename to api-gateway
 
-SETTING
----------
-package.json
-nest-cli.json
-tsconfig.app.json (in each apps/)
+dir structure 
+=============
+eventflow-app
+  apps    
+    auth-service
+    api-gateway
+      -tsconfig.app.json (7)
+  -nest-cli.json (5)
+  -package.json (6)
 
-nest start --watch auth-service
+5. edit nest-cli.json -> replace all "eventflow-app" to "api-gateway"
+6. edit package.json -> replace all "eventflow-app" to "api-gateway" 
 
-nest start --watch api-gateway
+7. edit tsconfig.app.json -> replace all "eventflow-app" to "api-gateway" 
+
+IN:  D:\PROJECTS\nest-js-kafka-postgres-microservices\eventflow-app> 
+8. nest start --watch api-gateway 
+
+9. nest start --watch auth-service
+
+
+10. nest start --watch event-service
 
 cd eventflow-app
 nest g lib common
+nest g lib database
+nest g lib kafka
 
 dir structure 
 ==============
@@ -35,8 +51,11 @@ eventflow-app
     auth-service
   libs
     common   
+    database
+    kafka
 
 ======= KAFKA n MICROSERVICES ========
+IN :   D:\PROJECTS\nest-js-kafka-postgres-microservices\eventflow-app> 
 npm i --save @nestjs/microservices kafkajs
 npm i --save kafkajs
 nest g lib kafka
@@ -260,3 +279,7 @@ RESPONSE: 401
     "statusCode": 401,
     "message": "Unauthorized"
 }
+========== in eventflow-app ====
+npm i @nestjs/mapped-types
+
+nest g app events-service

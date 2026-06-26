@@ -133,6 +133,6 @@ export class AuthServiceService implements OnModuleInit {
   }
 
   getHello(): string {
-    return 'Hello World!';
+    return `Auth Service is running on port ${SERVICES_PORTS.AUTH_SERVICE}`;
   }
 }

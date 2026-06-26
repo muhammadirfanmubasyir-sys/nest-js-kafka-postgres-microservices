@@ -1,0 +1,54 @@
+CONNECT:
+=======
+psql -h localhost -p 5433 -U admin -d eventflow-db
+
+\l : Lists all available database objects.
+
+\c db_name : Switches connection context to a different database.
+
+\dt : Shows all tables residing inside the active database.
+
+\? : Launches general meta-command help documentation.
+
+\h SQL_COMMAND : Outputs accurate manual syntax structure for standard SQL commands.
+
+\q : Quits the interactive console session safely
+ 
+Managing Databases and Roles
+=============================
+CREATE DATABASE db_name; : Initializes a fresh database instance.
+
+DROP DATABASE db_name; : Completely destroys an existing database.
+
+CREATE USER user_name WITH PASSWORD 'pass'; : Configures a standard login account profile.
+
+ALTER ROLE user_name WITH PASSWORD 'new_pass'; : Changes user access credentials quickly.
+
+GRANT ALL PRIVILEGES ON DATABASE db_name TO user_name; : Passes total root authority downwards.
+
+GRANT SELECT, INSERT, UPDATE ON TABLE t TO user_name; : Controls microscopic DML level security permissions
+
+Table Creation & Schema Alteration
+===================================
+CREATE TABLE t (id SERIAL PRIMARY KEY, name TEXT NOT NULL); : Creates structured storage matrices.
+ALTER TABLE t ADD COLUMN age INT; : Inserts new attributes into existing structures.
+ALTER TABLE t DROP COLUMN age; : Erases table attributes safely.
+ALTER TABLE t RENAME COLUMN old TO new; : Modifies column naming identifiers.
+
+Importing and Exporting Data
+=============================
+pg_dump -U user -d db_name > backup.sql : Exports logical database backups into standard text files.
+
+psql -U user -d db_name < backup.sql : Restores databases straight from clean text configurations.
+
+pg_dump -Fc -U user -d db_name -f backup.dump : Creates high-speed compressed custom data archives.
+
+pg_restore -d db_name backup.dump : Restores customized database archive formats
+
+Inspecting Infrastructure Diagnostics
+====================================
+SELECT version(); : Evaluates target PostgreSQL server core compilation version metrics.
+
+SELECT pg_size_pretty(pg_database_size('db_name')); : Computes raw physical disk bytes consumed by a database.
+
+SELECT pg_size_pretty(pg_total_relation_size('table_name')); : Aggregates table weight including index components.
