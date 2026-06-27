@@ -136,9 +136,7 @@ export class AuthServiceService implements OnModuleInit {
     const payload = message?.value ?? message;
     const event = typeof payload === 'string' ? JSON.parse(payload) : payload;
 
-   this.LOGGER.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_REGISTERED}: ${JSON.stringify(event)}`);
-
-
+    this.LOGGER.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_REGISTERED}: ${JSON.stringify(event)}`);
     const { userId, email, timestamp } = event || {};
 
     this.LOGGER.log(

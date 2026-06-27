@@ -5,10 +5,7 @@ import { Pool } from 'pg';
 import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres';
 
 import * as schema from './schema'; 
- 
-
-
-@Injectable()
+ @Injectable()
 export class DatabaseService implements OnModuleDestroy {
     private readonly LOGGER = new Logger(DatabaseService.name);
 
