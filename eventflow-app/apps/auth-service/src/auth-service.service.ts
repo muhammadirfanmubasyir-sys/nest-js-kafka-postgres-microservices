@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthServiceService implements OnModuleInit {
 
-  private readonly LOGGER = new Logger(AuthServiceService.name);
+  public readonly LOGGER = new Logger(AuthServiceService.name);
   
   constructor(
     @Inject(KAFKA_SERVICE) private readonly kafkaClient: ClientKafka,
@@ -150,10 +150,10 @@ export class AuthServiceService implements OnModuleInit {
 
     this.LOGGER.log(`EventPattern :: Received message from topic ${KAFKA_TOPICS.USER_LOGIN}: ${JSON.stringify(event)}`);
 
-    const { userId, timestamp } = event || {};
+    const { userId, userEmail, timestamp } = event || {};
 
     this.LOGGER.log(
-      `EventPattern :: Parsed USER_LOGIN event: userId=${userId}, timestamp=${timestamp}`,
+      `EventPattern :: Parsed USER_LOGIN event: userId=${userId}, userEmail=${userEmail}, timestamp=${timestamp}`,
     );
   }
 
