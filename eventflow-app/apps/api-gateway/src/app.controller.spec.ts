@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { beforeEach, describe, it } from 'node:test';
+import { expect, jest, test } from '@jest/globals';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -20,3 +22,4 @@ describe('AppController', () => {
     });
   });
 });
+ 

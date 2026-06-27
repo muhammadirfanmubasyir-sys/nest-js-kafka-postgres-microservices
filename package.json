@@ -2,5 +2,8 @@
   "dependencies": {
     "@nestjs/microservices": "^11.1.19",
     "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }

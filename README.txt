@@ -305,3 +305,8 @@ RESPONSE: 401
 npm i @nestjs/mapped-types
 
 nest g app events-service
+
+===== TEST =========
+npm install @nestjs/testing
+npm install @jest/globals
+npm install --save-dev jest

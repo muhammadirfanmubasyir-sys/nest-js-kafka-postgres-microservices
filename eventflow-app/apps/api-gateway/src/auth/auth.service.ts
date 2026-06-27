@@ -3,11 +3,9 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { SERVICES_PORTS } from '@app/common';
  
-
-
 @Injectable()
 export class AuthService {
-    private readonly authServiceUrl = `http://localhost:${SERVICES_PORTS.AUTH_SERVICE}`;
+    public readonly authServiceUrl = `http://localhost:${SERVICES_PORTS.AUTH_SERVICE}`;
 
     constructor(private readonly httpService: HttpService) {}
 
