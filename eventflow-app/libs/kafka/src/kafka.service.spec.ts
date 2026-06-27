@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { KafkaService } from './kafka.service';
 
+import { beforeEach, describe, it } from 'node:test';
+import { expect, jest, test } from '@jest/globals';
+
 describe('KafkaService', () => {
   let service: KafkaService;
 
