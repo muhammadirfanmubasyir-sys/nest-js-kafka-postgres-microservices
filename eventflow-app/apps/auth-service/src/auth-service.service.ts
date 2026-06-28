@@ -26,18 +26,6 @@ export class AuthServiceService implements OnModuleInit {
     await this.kafkaClient.connect();
   }
  
-  async simulateUserRegistration(email: string) {
-    // Publish event to the 'USER_REGISTERED' topic
-    this.kafkaClient.emit(KAFKA_TOPICS.USER_REGISTERED, { 
-        email,
-        timestamp: new Date().toISOString(),
-    });
-
-    this.LOGGER.log(`Published event to topic ${KAFKA_TOPICS.USER_REGISTERED} with email: ${email}`);
-    
-    return  { message: `User registered : ${email}` };
-  }
-
   async register(email: string, password: string, name: string) {
     //check existing user 
     const existingUser = await this.dbService.db

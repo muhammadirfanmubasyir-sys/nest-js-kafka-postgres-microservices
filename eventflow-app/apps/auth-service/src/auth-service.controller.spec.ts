@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthServiceController } from './auth-service.controller';
 import { AuthServiceService } from './auth-service.service';
+ 
 // Removed node:test completely
-import { beforeEach, describe, it, expect, jest } from '@jest/globals';
+// import { beforeEach, describe, it, expect, jest } from '@jest/globals';
 
 describe('AuthServiceController', () => {
   let controller: AuthServiceController;
