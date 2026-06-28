@@ -16,7 +16,13 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
+  describe('getInfo', () => {
+    it('should return "API Gateway is running on port 3000"', () => {
+      expect(appController.getInfo()).toBe('API Gateway is running on port 3000');
+    });
+  });
+
+  describe('getHello', () => {
     it('should return "Hello World!"', () => {
       expect(appController.getHello()).toBe('Hello World!');
     });

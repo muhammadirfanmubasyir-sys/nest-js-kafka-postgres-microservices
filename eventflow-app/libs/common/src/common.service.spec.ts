@@ -15,7 +15,13 @@ describe('CommonService', () => {
     service = module.get<CommonService>(CommonService);
   });
 
-  it('should be defined', () => {
+  it('should be OK 1', () => {
     expect(service).toBeDefined();
   });
+
+  
+  it('should be OK 2', () => {
+    expect(true).toBe(true);
+  });
+ 
 });

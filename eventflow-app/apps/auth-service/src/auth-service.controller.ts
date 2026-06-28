@@ -17,11 +17,6 @@ export class AuthServiceController {
     return this.authServiceService.getHello();
   }
 
-  @Post('_register_')
-  registerUser(@Body() body: { email: string }) {
-    return this.authServiceService.simulateUserRegistration(body.email);
-  }
-
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authServiceService.register(dto.email, dto.password, dto.name)
