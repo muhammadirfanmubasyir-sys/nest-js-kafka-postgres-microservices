@@ -18,6 +18,7 @@ describe('AuthServiceController', () => {
           useValue: {
             getHello: jest.fn(), 
             register: jest.fn(), 
+            login: jest.fn(),
           },
         }
       ],
@@ -27,23 +28,42 @@ describe('AuthServiceController', () => {
     service = app.get<AuthServiceService>(AuthServiceService);
   });
 
-  it('getHello should return "Hello Irfan!"', () => {
+  it('getHello()', () => {
     jest.spyOn(service, 'getHello').mockReturnValue('Hello Irfan!');
     expect(controller.getHello()).toBe('Hello Irfan!'); // Changed to controller to test the controller layer
   });
 
-  it('register should call authServiceService.register with correct parameters', () => {
+  it('register()', () => {
     const expectedResponse = {
       message: 'User registered successfully',
       userId: 'irfan123',
     };
 
     jest.spyOn(service, 'register').mockImplementation(() => expectedResponse as any);
-
     const dto = { email: 'test@example.com', password: 'password', name: 'Test User' };
     const response = controller.register(dto);
 
     expect(service.register).toHaveBeenCalledWith(dto.email, dto.password, dto.name);
     expect(response).toEqual(expectedResponse);
   });  
+
+  it('login()', () => {
+    const expectedResponse = {
+      access_token: "token",
+      user: {
+        id: "irfan123",
+        email: "irfan@gmail.com",
+        name: "irfan",
+        role: "user",
+      }
+    };
+
+    jest.spyOn(service, 'login').mockImplementation(() => expectedResponse as any);
+    const dto = { email: 'test@example.com', password: 'password' };
+    const response = controller.login(dto);
+
+    expect(service.login).toHaveBeenCalledWith(dto.email, dto.password);
+    expect(response).toEqual(expectedResponse);
+  });  
+
 });
