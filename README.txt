@@ -310,3 +310,20 @@ nest g app events-service
 npm install @nestjs/testing
 npm install @jest/globals
 npm install --save-dev jest
+
+tsconfig.json
+=============
+{
+  "compilerOptions": {
+    "types": ["node", "jest"] ,
+  }
+}
+
+jest-e2e.json
+==============
+  "moduleNameMapper": {
+    "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+    "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
+    "^@app/kafka(|/.*)$": "<rootDir>/libs/kafka/src/$1"
+  }
+}

@@ -89,19 +89,18 @@ describe('AuthServiceController', () => {
     expect(service.handleUserLoginMessage).toHaveBeenCalledWith(message);
   });
 
-  /*
+   
   it('getProfile(): should call service.getProfile with the userId from request', async () => { 
     const userId = '123'; 
     const req = { user: { userId } }; 
     const expectedProfile = { id: userId, email: 'test@example.com', name: 'Test User', role: 'USER' };
 
-    jest.spyOn(service, 'getProfile').mockImplementation( expectedProfile as any);
-    //mockAuthService.getProfile.mockResolvedValue(expectedProfile);
-    const result =  controller.getProfile(req);
+    jest.spyOn(service, 'getProfile').mockResolvedValue(expectedProfile as any);
+    const result = await controller.getProfile(req);
 
-  //  expect(result).toEqual(expectedProfile);
-    expect(service.getProfile).toHaveBeenCalledWith(req);
+    expect(result).toEqual(expectedProfile);
+    expect(service.getProfile).toHaveBeenCalledWith(userId);
   });
-  */
+   
 
 });
