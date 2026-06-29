@@ -1,11 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { beforeEach, describe, it } from 'node:test';
-import { expect, jest, test } from '@jest/globals';
 
 describe('AppController', () => {
-  let appController: AppController;
+  let controller: AppController;
+  let service: AppService;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -13,19 +12,15 @@ describe('AppController', () => {
       providers: [AppService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    controller = app.get<AppController>(AppController);
+    service = app.get<AppService>(AppService);
   });
 
-  describe('getInfo', () => {
-    it('should return "API Gateway is running on port 3000"', () => {
-      expect(appController.getInfo()).toBe('API Gateway is running on port 3000');
-    });
+  it('getInfo(): should return gateway status with port', () => {
+    expect(controller.getInfo()).toBe('API Gateway is running on port 3000');
   });
 
-  describe('getHello', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
+  it('getHello(): should return Hello World!', () => {
+    expect(controller.getHello()).toBe('Hello World!');
   });
 });
- 
