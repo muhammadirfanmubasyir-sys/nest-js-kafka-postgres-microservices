@@ -1,9 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommonService } from './common.service';
 
-import { beforeEach, describe, it } from 'node:test';
-import { expect, jest, test } from '@jest/globals';
-
 describe('CommonService', () => {
   let service: CommonService;
 
@@ -15,13 +12,7 @@ describe('CommonService', () => {
     service = module.get<CommonService>(CommonService);
   });
 
-  it('should be OK 1', () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
-
-  
-  it('should be OK 2', () => {
-    expect(true).toBe(true);
-  });
- 
 });
